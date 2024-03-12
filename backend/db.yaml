@@ -1,0 +1,6 @@
+mysql_host: 'mysql-service'
+mysql_port: 3306
+mysql_user: 'root'
+mysql_password: 'password'
+mysql_db: 'todo_db'
+sqlalchemy_database_uri: 'mysql+pymysql://root:password@mysql-service:3306/todo_db'
