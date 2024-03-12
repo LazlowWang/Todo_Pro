@@ -1,6 +1,6 @@
 #Command line
 
-# Enable APIs
+
 gcloud services enable container.googleapis.com
 gcloud services enable sqladmin.googleapis.com
 
