@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-nginx
+  template:
+    metadata:
+      labels:
+        app: flask-nginx
+    spec:
+      containers:
+      - name: flask
+        image: gcr.io/ece-9016-group-02-project/todo-backend
+        ports:
+        - containerPort: 5000
+      affinity: # This line and below should be aligned with "containers"
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - flask-nginx
+                  - mysql
+              topologyKey: "kubernetes.io/hostname"
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-config-volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+        - name: nginx-html-volume
+          mountPath: /usr/share/nginx/html   
+        
+      volumes:
+      - name: nginx-config-volume
+        configMap:
+          name: nginx-config
+      - name: nginx-html-volume
+        configMap:
+          name: nginx-html-config
