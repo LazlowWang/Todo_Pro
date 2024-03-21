@@ -1,3 +1,4 @@
+```sh
 #Command line
 
 
@@ -35,16 +36,19 @@ kubectl apply -f k8s/
 kubectl  get pods -o wide
 
 kubectl get services
+```
 
 
 
 stop:
+```sh
 gcloud container clusters resize todo-list-cluster-pro --zone=northamerica-northeast2-a --num-nodes=0 --node-pool=default-pool
 gcloud container clusters resize todo-list-cluster-pro --zone=northamerica-northeast2-a --num-nodes=0 --node-pool=additional-pool
-
+```
 
 start:
+```sh
 gcloud container clusters resize todo-list-cluster-pro --zone=northamerica-northeast2-a --num-nodes=2 --node-pool=default-pool
 
 gcloud container clusters resize todo-list-cluster-pro --zone=northamerica-northeast2-b --num-nodes=1 --node-pool=additional-pool
-
+```
