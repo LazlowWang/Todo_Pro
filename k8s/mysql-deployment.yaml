@@ -13,7 +13,6 @@ spec:
         app: mysql
     spec:
       containers:
-      
       - name: mysql
         image: mysql:5.7
         env:
@@ -28,6 +27,13 @@ spec:
           mountPath: /var/lib/mysql-data
         - name: mysql-initdb
           mountPath: /docker-entrypoint-initdb.d
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc
+      - name: mysql-initdb
+        configMap:
+          name: mysql-init-db-config
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:  # Conditions that must be met for a pod to be scheduled on a node;
@@ -37,12 +43,4 @@ spec:
                    operator: In
                    values:
                    - flask-nginx
-                   - mysql
               topologyKey: "kubernetes.io/hostname" #not distributed to the same node
-      volumes:
-      - name: mysql-storage
-        persistentVolumeClaim:
-          claimName: mysql-pvc
-      - name: mysql-initdb
-        configMap:
-          name: mysql-init-db-config
