@@ -5,12 +5,12 @@
 gcloud services enable container.googleapis.com
 gcloud services enable sqladmin.googleapis.com
 
-#2 nodes in Toronto-a zone, 1  node in Toronto-b zone
+#3 nodes in Toronto-a zone
 gcloud container clusters create todo-list-cluster-pro \
     --zone=northamerica-northeast2-a \
-    --num-nodes=2
+    --num-nodes=3
 
-gcloud container node-pools create additional-pool \
+#NA gcloud container node-pools create additional-pool \
     --cluster=todo-list-cluster-pro \
     --zone=northamerica-northeast2-a \
     --node-locations=northamerica-northeast2-b \
